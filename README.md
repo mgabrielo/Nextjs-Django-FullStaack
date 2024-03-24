@@ -1,1 +1,3 @@
-# Nextjs-Django In Progress
+# Nextjs-Django Full Stack Project
+
+# ....In Progress
