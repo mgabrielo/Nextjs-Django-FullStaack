@@ -12,7 +12,7 @@ export const apiService = {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log({ "result-data": result.data });
+          // console.log({ "result-data": result.data });
           resolve(result.data);
         })
         .catch((err) => {
@@ -26,13 +26,14 @@ export const apiService = {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
         method: "GET",
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log({ "result-data": result.data });
+          // console.log({ "result-data": result.data });
           resolve(result.data);
         })
         .catch((err) => {
@@ -52,7 +53,7 @@ export const apiService = {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
+          // console.log(result);
           resolve(result);
         })
         .catch((err) => {
@@ -67,13 +68,15 @@ export const apiService = {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
         method: "POST",
         headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: data,
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
+          // console.log(result);
           resolve(result);
         })
         .catch((err) => {

@@ -6,18 +6,22 @@ import MenuLink from "./MenuLink";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useSignUpModal from "@/app/hooks/useSignUpModal";
 import LogOutButton from "../buttons/LogOutButton";
+import { useRouter } from "next/navigation";
 
 interface IUSerNav {
   userId?: string | null;
 }
 
 const UserNav: FC<IUSerNav> = ({ userId }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const logInModal = useLoginModal();
   const signUpModal = useSignUpModal();
   return (
     <>
-      <div className="inset-0 fixed -z-10" onClick={() => setIsOpen(false)} />
+      {isOpen && (
+        <div className="inset-0 fixed -z-10" onClick={() => setIsOpen(false)} />
+      )}
       <div className="p-2 relative inline-block rounded-full border">
         <button
           className="flex items-center"
@@ -27,9 +31,25 @@ const UserNav: FC<IUSerNav> = ({ userId }) => {
           <UserIcon />
         </button>
         {isOpen && (
-          <div className="w-[220px] absolute top-[42px] z-20 right-0 bg-white border-1 border-gray-300  rounded-b-lg shadow-md">
+          <div className="w-[220px] absolute top-[42px] z-50 right-0 bg-white border-1 border-gray-300  rounded-b-lg shadow-md">
             {userId ? (
-              <LogOutButton setIsOpen={(value) => setIsOpen(value)} />
+              <>
+                <MenuLink
+                  label="My Properties"
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push("/myproperties");
+                  }}
+                />
+                <MenuLink
+                  label="My Reservations"
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push(`/myreservations/${userId}`);
+                  }}
+                />
+                <LogOutButton setIsOpen={(value) => setIsOpen(value)} />
+              </>
             ) : (
               <>
                 <MenuLink

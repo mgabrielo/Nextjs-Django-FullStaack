@@ -11,7 +11,7 @@ const MenuLink: FC<IMenuLink> = ({ label, className, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className={`px-4 py-3 cursor-pointer hover:bg-gray-100 transition${className}`}
+      className={`px-4 py-3 cursor-pointer hover:bg-gray-100 transition ${className}`}
     >
       {label}
     </div>

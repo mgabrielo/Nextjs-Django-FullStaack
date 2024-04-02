@@ -15,7 +15,7 @@ const LogOutButton = ({
     router.push("/");
     setIsOpen(false);
   };
-  return <MenuLink label="Log Out" onClick={handleLogOut} />;
+  return <MenuLink label="Log Out" onClick={handleLogOut} className="z-50" />;
 };
 
 export default LogOutButton;
