@@ -64,7 +64,7 @@ const AddPropertyModal = () => {
       );
 
       if (response.success) {
-        console.log("success");
+        // console.log("success");
         router.push("/");
         addPropertyModal.close();
       } else {

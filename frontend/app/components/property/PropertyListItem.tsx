@@ -2,11 +2,17 @@ import Image from "next/image";
 import React, { FC } from "react";
 import { PropertyType } from "./PropertyList";
 import { useRouter } from "next/navigation";
+import FavoriteButton from "../buttons/FavoriteButton";
 
 interface PropertyItemProps {
   property: PropertyType;
+  markFavorite?: (is_favorite: boolean) => void;
 }
-const PropertyListItem: FC<PropertyItemProps> = ({ property }) => {
+
+const PropertyListItem: FC<PropertyItemProps> = ({
+  property,
+  markFavorite,
+}) => {
   const router = useRouter();
 
   return (
@@ -22,6 +28,13 @@ const PropertyListItem: FC<PropertyItemProps> = ({ property }) => {
             sizes="(max-width:768px) 750px, (max-width:1200px): 768px"
             alt="img-23"
             className="hover:scale-110 object-cover transition h-full w-full"
+          />
+        )}
+        {markFavorite && (
+          <FavoriteButton
+            id={property?.id}
+            isFavorite={property?.is_favorite}
+            markFavorite={(is_favorite) => markFavorite(is_favorite)}
           />
         )}
       </div>

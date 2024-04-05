@@ -26,8 +26,6 @@ export const apiService = {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
         method: "GET",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       })
@@ -67,11 +65,15 @@ export const apiService = {
     return new Promise((resolve, reject) => {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers:
+          data instanceof FormData
+            ? {
+                Authorization: `Bearer ${token}`,
+              }
+            : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
         body: data,
       })
         .then((response) => response.json())

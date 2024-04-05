@@ -4,6 +4,8 @@ from property.models import Reservation
 from .serializer import UserDetailSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from property.serializer import  ReservationListSerializer
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.hashers import make_password
 
 @api_view(['GET'])
 @authentication_classes([])
@@ -14,11 +16,9 @@ def landlord_detail(request,pk):
     return JsonResponse({'data': serializer.data})
 
 @api_view(['GET'])
-@authentication_classes([])
-@permission_classes([])
-def reservation_list(request, pk):
-    reservations= Reservation.objects.all()
-    filter_reservations = reservations.filter(created_by=pk)
-    serializer = ReservationListSerializer(filter_reservations,many=True)
+@permission_classes([IsAuthenticated]) 
+def my_reservation_list(request):
+    reservations= request.user.reservations.all()
+    serializer = ReservationListSerializer(reservations,many=True)
     return JsonResponse({'data': serializer.data})
 

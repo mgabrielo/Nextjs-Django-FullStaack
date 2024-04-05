@@ -35,6 +35,13 @@ const UserNav: FC<IUSerNav> = ({ userId }) => {
             {userId ? (
               <>
                 <MenuLink
+                  label="Inbox"
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push("/inbox");
+                  }}
+                />
+                <MenuLink
                   label="My Properties"
                   onClick={() => {
                     setIsOpen(false);
@@ -45,7 +52,14 @@ const UserNav: FC<IUSerNav> = ({ userId }) => {
                   label="My Reservations"
                   onClick={() => {
                     setIsOpen(false);
-                    router.push(`/myreservations/${userId}`);
+                    router.push(`/myreservations`);
+                  }}
+                />
+                <MenuLink
+                  label="My Favorites"
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push(`/myfavorites`);
                   }}
                 />
                 <LogOutButton setIsOpen={(value) => setIsOpen(value)} />

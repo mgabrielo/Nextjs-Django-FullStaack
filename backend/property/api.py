@@ -4,21 +4,37 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from .models import Property, Reservation, User
 from .serializer import PropertyListSerializer, PropertyDetailSerializer, ReservationListSerializer
 from .forms  import PropertyForm
-from rest_framework.permissions import AllowAny
+from rest_framework.authentication import TokenAuthentication
+# from django.contrib.auth.models import AnonymousUser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import AccessToken 
 
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([])
 def property_list(request):
+    try:
+        token = request.META['HTTP_AUTHORIZATION'].split('Bearer ')[1]
+        token= AccessToken(token)
+        user_id = token.payload['user_id']
+        user = User.objects.get(pk=user_id)
+        print('props-user',user)
+    except Exception as e:
+        user= None
     properties= Property.objects.all()
-    #filter by landlord
     landlord_id =request.GET.get('landlord_id','')
+    is_favorites= request.GET.get('is_favorites','')
+    #filter by landlord
     if landlord_id:
         properties= properties.filter(landlord_id=landlord_id)
-    # non-filtered   
+    #filter by favorites
+    if is_favorites:
+        properties=properties.filter(favorited__in=[user])
     serializer= PropertyListSerializer(properties, many=True)
     return JsonResponse({
-        'data': serializer.data
+        'data': {
+            'property_data': serializer.data, 
+        }
     })
 
 
@@ -34,6 +50,7 @@ def property_details(request, pk):
         return JsonResponse({'error': 'property does not exist'}, status=400)
     
 @api_view(['POST', 'FILES'])
+@permission_classes([IsAuthenticated]) 
 def create_property(request):
     form = PropertyForm(request.POST, request.FILES)
     if form.is_valid():
@@ -82,3 +99,17 @@ def property_reservation(request,pk):
     serializer= ReservationListSerializer(reservation, many=True)
     return JsonResponse({'data':serializer.data})
     # Alternative - return JsonResponse(serializer.data, safe=False)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated]) 
+def toggle_favorite(request,pk):
+    property=Property.objects.get(pk=pk)
+    print('user',request.user)
+    if request.user in property.favorited.all():
+        property.favorited.remove(request.user)
+        return JsonResponse({'data':{'is_favorite': False}})
+    else:
+        property.favorited.add(request.user)
+        return JsonResponse({'data': {'is_favorite': True}})
+
+

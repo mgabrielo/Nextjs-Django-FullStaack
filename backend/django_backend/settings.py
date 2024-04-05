@@ -36,7 +36,7 @@ AUTH_USER_MODEL='useraccount.User'
 SITE_ID=1
 WEBSITE_URL='http://localhost:8000'
 SIMPLE_JWT={
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=3),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKEN": False,
     "BLACKLIST_AFTER_ROTATION": False,
@@ -73,9 +73,16 @@ REST_AUTH={
     "JWT_AUTH_HTTPONLY":False
 }
 
+CHANNEL_LAYERS={
+    'default':{
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
+
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,6 +99,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'useraccount',
     'property',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +133,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'django_backend.wsgi.application'
+ASGI_APPLICATION ='django_backend.asgi.application'
 
 
 # Database
@@ -132,8 +141,8 @@ WSGI_APPLICATION = 'django_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DJANGO_DATABASE_NAME'),
         'USER':  os.getenv('DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': 'localhost',   # Or your PostgreSQL host

@@ -54,19 +54,20 @@ const ReservationSideBar: FC<ReservationProps> = ({ property, userId }) => {
       if (dateRange.startDate && dateRange.endDate) {
         const selectedStartDate = format(dateRange.startDate, "yyyy-MM-dd");
         const selectedEndDate = format(dateRange.endDate, "yyyy-MM-dd");
-        const formData = new FormData();
-        formData.append("guests", guests);
-        formData.append("start_date", selectedStartDate);
-        formData.append("end_date", selectedEndDate);
-        formData.append("number_of_nights", nights.toString());
-        formData.append("total_price", totalPrice.toString());
-        formData.append("user_id", userId);
+        const formData = {
+          guests: guests,
+          start_date: selectedStartDate,
+          end_date: selectedEndDate,
+          number_of_nights: nights.toString(),
+          total_price: totalPrice.toString(),
+          user_id: userId,
+        };
         const response = await apiService.postWithToken(
           `/api/properties/book/${property.id}/`,
-          formData
+          JSON.stringify(formData)
         );
         if (response.success) {
-          console.log(response);
+          console.log("success-", response);
         } else {
           console.log("something went wrong");
         }

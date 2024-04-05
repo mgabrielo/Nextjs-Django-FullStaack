@@ -19,7 +19,7 @@ const SignUpModal = () => {
   const [errors, setErrors] = useState<string[]>([]);
 
   const submitSignUp = async () => {
-    console.log(formData);
+    // console.log(formData);
     const response = await apiService.post(
       "/api/auth/register/",
       JSON.stringify(formData)

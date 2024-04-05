@@ -5,7 +5,7 @@ import React from "react";
 
 const MyReservationsPage = async ({ params }: { params: { id: string } }) => {
   const reservations = await apiService.getWithToken(
-    `/api/auth/myreservations/${params.id}/`
+    `/api/auth/myreservations/`
   );
 
   return (

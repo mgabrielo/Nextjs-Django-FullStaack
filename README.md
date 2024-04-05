@@ -1,3 +1,5 @@
-# Nextjs-Django Full Stack Project
+# Nextjs-Django Full Stack Project using Nextjs 14, Django, Zustand, Channels, Socket.Io, Websocket, RestFramwWork,SimpleJwt,etc...
 
-# ....In Progress
+# Air-Bnb Project
+
+# ....Almost Done
