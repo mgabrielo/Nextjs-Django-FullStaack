@@ -8,6 +8,7 @@ import Link from "next/link";
 const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
   const property = await apiService.get(`/api/properties/${params.id}/`);
   const userId = await getUserId();
+
   return (
     <main className="max-w-screen-2xl mx-auto px-5 z-20">
       {/* use or add higher z-index on layouts to make it acessible above the modal that has lesser z-index */}

@@ -1,5 +1,8 @@
 import React, { FC } from "react";
 import SwimIcon from "../icons/SwimIcon";
+import VillaIcon from "../icons/VillaIcon";
+import CabinIcon from "../icons/CabinIcon";
+import TinyHome from "../icons/TinyHome";
 interface ICategories {
   dataCategory?: string;
   setDatacategory?: (category: string) => void;
@@ -26,7 +29,7 @@ const Categories: FC<ICategories> = ({ dataCategory, setDatacategory }) => {
           dataCategory == "Villas" ? "border-gray-800" : "border-white"
         } border-b-2  hover:border-gray-800 opacity-60 hover:opacity-100`}
       >
-        <SwimIcon />
+        <VillaIcon />
         <span className="text-xs pt-[2px]">Villas</span>
       </div>
       <div
@@ -37,7 +40,7 @@ const Categories: FC<ICategories> = ({ dataCategory, setDatacategory }) => {
           dataCategory == "Cabins" ? "border-gray-800" : "border-white"
         } border-b-2  hover:border-gray-800 opacity-60 hover:opacity-100`}
       >
-        <SwimIcon />
+        <CabinIcon />
         <span className="text-xs pt-[2px]">Cabins</span>
       </div>
       <div
@@ -48,7 +51,7 @@ const Categories: FC<ICategories> = ({ dataCategory, setDatacategory }) => {
           dataCategory == "Tiny Homes" ? "border-gray-800" : "border-white"
         } border-b-2  hover:border-gray-800 opacity-60 hover:opacity-100`}
       >
-        <SwimIcon />
+        <TinyHome />
         <span className="text-xs pt-[2px]">Tiny Homes</span>
       </div>
     </div>

@@ -1,9 +1,15 @@
+"use client";
 import React from "react";
 import SearchIcon from "../icons/SearchIcon";
+import useSearchModal from "@/app/hooks/useSearchModal";
 
 const SearchFilter = () => {
+  const searchModal = useSearchModal();
   return (
-    <div className="h-[54px] flex flex-row items-center justify-between border rounded-full">
+    <div
+      onClick={() => searchModal.open("location")}
+      className="h-[54px] flex flex-row items-center justify-between border rounded-full"
+    >
       <div className="hidden lg:flex">
         <div className="flex flex-row items-center justify-between">
           <div className="w-[150px] h-[50px] cursor-pointer justify-center px-8 flex flex-col rounded-full hover:bg-gray-300">

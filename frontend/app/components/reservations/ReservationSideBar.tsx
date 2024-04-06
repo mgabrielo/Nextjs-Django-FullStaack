@@ -5,7 +5,6 @@ import { apiService } from "@/app/service/apiService";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { differenceInDays, eachDayOfInterval, format } from "date-fns";
 import CalendarDatePicker from "../calendar/Calendar";
-import { getAccessToken } from "@/app/actions/serverActions";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -29,7 +28,6 @@ const ReservationSideBar: FC<ReservationProps> = ({ property, userId }) => {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [guests, setGuests] = useState<string>("1");
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
-  const [minDate, setMinDate] = useState<Date>(new Date());
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const guestRange = Array.from(
     { length: property?.guests },

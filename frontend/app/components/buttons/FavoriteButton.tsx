@@ -26,7 +26,9 @@ const FavoriteButton: FC<FavoriteProps> = ({
   };
 
   useEffect(() => {
-    toggleFavorite();
+    if (id) {
+      toggleFavorite();
+    }
   }, [id]);
   return (
     <div

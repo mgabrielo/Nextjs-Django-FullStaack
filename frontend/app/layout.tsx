@@ -7,6 +7,7 @@ import LoginModal from "./components/modals/LoginModal";
 import SignUpModal from "./components/modals/SignUpModal";
 import { getUserId } from "./actions/serverActions";
 import AddPropertyModal from "./components/modals/AddPropertyModal";
+import SaerchModal from "./components/modals/SaerchModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default async function RootLayout({
         <LoginModal />
         <SignUpModal />
         <AddPropertyModal />
+        <SaerchModal />
       </body>
     </html>
   );

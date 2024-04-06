@@ -18,18 +18,50 @@ def property_list(request):
         token= AccessToken(token)
         user_id = token.payload['user_id']
         user = User.objects.get(pk=user_id)
-        print('props-user',user)
+        # print('props-user',user)
     except Exception as e:
         user= None
     properties= Property.objects.all()
+
+    #filter factors
     landlord_id =request.GET.get('landlord_id','')
     is_favorites= request.GET.get('is_favorites','')
+    country=request.GET.get('country','')
+    category=request.GET.get('category','')
+    check_in_date=request.GET.get('checkIn','')
+    check_out_date=request.GET.get('checkOut','')
+    guests=request.GET.get('numberOfGuest','')
+    bedrooms=request.GET.get('numberOfBedrooms','')
+    bathrooms=request.GET.get('numberOfBathrooms','')
+
     #filter by landlord
     if landlord_id:
         properties= properties.filter(landlord_id=landlord_id)
     #filter by favorites
     if is_favorites:
         properties=properties.filter(favorited__in=[user])
+    # filter by search 
+    if check_in_date and check_out_date:
+        exact_match= Reservation.objects.filter(start_date=check_in_date) | Reservation.objects.filter(end_date=check_out_date)
+        overlap_match=Reservation.objects.filter(start_date__lte=check_out_date, end_date__gte=check_in_date)
+        all_matches=[]
+
+        for reservation in exact_match | overlap_match:
+            all_matches.append(reservation.property_id)
+
+        properties = properties.exclude(id__in=all_matches)
+
+    if guests:
+        properties= properties.filter(guests__gte=guests)
+    if bedrooms:
+        properties= properties.filter(bedrooms__gte=bedrooms)
+    if bathrooms:
+        properties= properties.filter(bathrooms__gte=bathrooms)
+    if country:
+        properties= properties.filter(country=country)    
+    if category and category != 'undefined':
+        properties= properties.filter(category=category)
+
     serializer= PropertyListSerializer(properties, many=True)
     return JsonResponse({
         'data': {
@@ -104,7 +136,7 @@ def property_reservation(request,pk):
 @permission_classes([IsAuthenticated]) 
 def toggle_favorite(request,pk):
     property=Property.objects.get(pk=pk)
-    print('user',request.user)
+    # print('user',request.user)
     if request.user in property.favorited.all():
         property.favorited.remove(request.user)
         return JsonResponse({'data':{'is_favorite': False}})

@@ -14,7 +14,6 @@ const PropertyListItem: FC<PropertyItemProps> = ({
   markFavorite,
 }) => {
   const router = useRouter();
-
   return (
     <div
       className="cursor-pointer z-0"
@@ -40,6 +39,9 @@ const PropertyListItem: FC<PropertyItemProps> = ({
       </div>
       <div className="pt-2 px-2 w-full">
         <p className="text-md font-semibold">{property.title}</p>
+        <p className="text-sm text-gray-500 font-semibold pt-1">
+          Category:&nbsp;{property?.category}
+        </p>
       </div>
       <div className="pt-2 px-2 w-full">
         <p className="text-sm  font-medium">
